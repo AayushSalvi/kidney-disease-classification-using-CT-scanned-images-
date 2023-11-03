@@ -34,4 +34,8 @@ To deploy this project run the following command in your command line in the /we
 ```bash
   python app.py 
 ```
+## Screnshots 
+![image](https://github.com/AayushSalvi/kidney-disease-classification-using-CT-scanned-images-/assets/65705434/3ef459fa-c875-47a7-93e7-0e32275e67c3)
+![image](https://github.com/AayushSalvi/kidney-disease-classification-using-CT-scanned-images-/assets/65705434/d2cdd5c5-0172-4bbc-99af-db664590144f)
+
 

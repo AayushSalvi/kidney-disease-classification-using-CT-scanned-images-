@@ -1,0 +1,173 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .upload-form input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        .prediction {
+            margin-top: 20px;
+        }
+
+        .prediction img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Classifier</h1>
+        <div class="upload-form">
+            <form action="/classify" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <button type="submit">Upload Image</button>
+            </form>
+        </div>
+
+        {% if prediction is not none %}
+            <div class="prediction">
+                <h2>Prediction:</h2>
+                <p>The predicted label is: {{ prediction }}</p>
+                <img src="{{ image_file }}" alt="Uploaded Image">
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidney Disease Classifier </title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+          background-color: #f7f7f7;
+      }
+
+      h1 {
+          text-align: center;
+          color: #333;
+      }
+
+      .container {
+          max-width: 500px;
+          margin: 0 auto;
+          text-align: center;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .upload-form {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 20px;
+      }
+
+      .upload-form input[type="file"] {
+          margin-bottom: 10px;
+      }
+
+      .prediction {
+          margin-top: 20px;
+      }
+
+      .prediction img {
+          display: block;
+          margin: 0 auto;
+          max-width: 100%;
+      }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kidney Disease Classifier</h1>
+        <div class="upload-form">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="fileInput" accept="image/*">
+                <button type="button" onclick="uploadImage()">Upload Image</button>
+            </form>
+        </div>
+
+        <div id="prediction" class="prediction" style="display: none;">
+            <h2>Prediction:</h2>
+            <p id="predictedLabel"></p>
+            <img id="uploadedImage" alt="Uploaded Image" style="display: none;">
+        </div>
+    </div>
+
+    <script>
+        function uploadImage() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select an image.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/classify', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const predictionDiv = document.getElementById('prediction');
+                const predictedLabel = document.getElementById('predictedLabel');
+                const uploadedImage = document.getElementById('uploadedImage');
+
+                predictionDiv.style.display = 'block';
+                predictedLabel.textContent = 'The predicted label is: ' + data.prediction;
+                uploadedImage.src = URL.createObjectURL(file);
+                uploadedImage.style.display = 'block';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
